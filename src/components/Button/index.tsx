@@ -1,5 +1,4 @@
     import styled from 'styled-components'
-    import { colors } from '../../styles/global'
 
         export const ButtonContainer = styled.button`
     background-color: #E66767; /* Fundo vermelho do botão */
