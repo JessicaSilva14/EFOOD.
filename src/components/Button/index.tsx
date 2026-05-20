@@ -8,8 +8,8 @@
     }
 
     const StyledButton = styled.button<ButtonProps>`
-    background-color: ${(props) => props.variant === 'primary' ? colors.textNeutral : colors.bgFooter};
-    color: ${(props) => props.variant === 'primary' ? colors.bgFooter : colors.textNeutral};
+    background-color: ${(props) => props.variant === 'primary' ? colors.textPrimary : colors.bgFooter};
+    color: ${colors.white};
     border: none;
     padding: 4px 6px;
     font-size: 14px;

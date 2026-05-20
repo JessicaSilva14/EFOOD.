@@ -19,7 +19,7 @@
     }
 
     body {
-        background-color: ${colors.bgPrimary};
+        background-color: ${colors.bgLight};
         color: ${colors.textPrimary};
     }
 
