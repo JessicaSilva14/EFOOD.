@@ -5,6 +5,6 @@
     export const AppRoutes = () => (
     <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/restaurante/:id" element={<Profile />} />
+        <Route path="/perfil/:id" element={<Profile />} />
     </Routes>
     )

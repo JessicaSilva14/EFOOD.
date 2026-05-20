@@ -1,37 +1,35 @@
-    import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
-    export const colors = {
-    textPrimary: '#E66767',
-    textNeutral: '#FFF8F2',
-    bgPrimary: '#E66767',
-    bgLight: '#FFF8F2',
-    bgCard: '#E66767',
-    bgFooter: '#3B3B3B',
+export const colors = {
+  textPrimary: '#E66767',   // Vermelho/Rosa característico do efood
+  bgLight: '#FFF8F2',       // Fundo geral bege bem claro
+  bgCard: '#FFFFFF',        // Fundo branco dos cards
+  bgFooter: '#FFEBD6',      // Bege mais escuro usado nos fundos e botões secundários
     white: '#FFFFFF'
-    }
+}
 
-    export const GlobalCss = createGlobalStyle`
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Roboto', sans-serif;
-        list-style: none;
-        text-decoration: none;
+export const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif; /* <-- ADICIONE AQUI */
+    list-style: none;
+    text-decoration: none;
     }
 
     body {
-        background-color: ${colors.bgLight};
-        color: ${colors.textPrimary};
+    background-color: ${colors.bgLight};
+    color: ${colors.textPrimary};
     }
 
     .container {
-        max-width: 1024px;
-        width: 100%;
-        margin: 0 auto;
-
-        @media (max-width: 1024px) {
-        max-width: 80%;
-        }
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    
+    @media (max-width: 1024px) {
+    max-width: 95%;
     }
-    `
+}
+`
