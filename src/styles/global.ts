@@ -1,10 +1,9 @@
     import { createGlobalStyle } from 'styled-components'
 
-    // Aqui estão TODAS as cores que o seu projeto precisa para não dar erro
     export const colors = {
     textPrimary: '#E66767',
-    textNeutral: '#E66767', // Adicionado para o Button encontrar
-    bgPrimary: '#FFF8F2',   // Adicionado para o fundo encontrar
+    textNeutral: '#FFF8F2',
+    bgPrimary: '#E66767',
     bgLight: '#FFF8F2',
     bgCard: '#E66767',
     bgFooter: '#3B3B3B',
@@ -35,4 +34,4 @@
         max-width: 80%;
         }
     }
-    ` 
+    `

@@ -1,12 +1,12 @@
 import { BrowserRouter } from 'react-router-dom'
 import { GlobalCss } from './styles/global'
-import { AppRoutes } from './routes' // Importando o nome exato do seu arquivo!
+import { AppRoutes } from './routes' 
 
 function App() {
   return (
     <BrowserRouter>
       <GlobalCss />
-      <AppRoutes /> {/* Chamando o seu componente de rotas correto */}
+      <AppRoutes /> 
     </BrowserRouter>
   )
 }

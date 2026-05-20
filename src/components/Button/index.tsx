@@ -5,13 +5,11 @@
     background-color: ${colors.textPrimary};
     color: ${colors.bgLight};
     border: none;
-    padding: 4px 0;
+    padding: 4px 6px;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
-    width: 100%;
-    display: block;
-    text-align: center;
+    display: inline-block;
     `
 
     type Props = {
@@ -22,4 +20,3 @@
     export const Button = ({ children, onClick }: Props) => {
     return <ButtonContainer onClick={onClick}>{children}</ButtonContainer>
     }
-    
