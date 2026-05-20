@@ -1,16 +1,12 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { GlobalStyle } from './styles/global'
-import { Home } from './pages/Home'
-import { Profile } from './pages/Profile'
+import { BrowserRouter } from 'react-router-dom'
+import { GlobalCss } from './styles/global'
+import { AppRoutes } from './routes' // Importando o nome exato do seu arquivo!
 
 function App() {
   return (
     <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/perfil/:id" element={<Profile />} />
-      </Routes>
+      <GlobalCss />
+      <AppRoutes /> {/* Chamando o seu componente de rotas correto */}
     </BrowserRouter>
   )
 }

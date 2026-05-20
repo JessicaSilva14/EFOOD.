@@ -1,31 +1,24 @@
     import styled from 'styled-components'
     import { colors } from '../../styles/global'
 
-    interface ButtonProps {
-    variant: 'primary' | 'secondary'
+    export const ButtonContainer = styled.button`
+    background-color: ${colors.textPrimary};
+    color: ${colors.bgLight};
+    border: none;
+    padding: 4px 0;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    text-align: center;
+    `
+
+    type Props = {
     children: string
     onClick?: () => void
     }
 
-    const StyledButton = styled.button<ButtonProps>`
-    background-color: ${(props) => props.variant === 'primary' ? colors.textPrimary : colors.bgFooter};
-    color: ${colors.white};
-    border: none;
-    padding: 4px 6px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    display: inline-block;
-    width: ${(props) => props.variant === 'secondary' ? '100%' : 'auto'};
-    transition: opacity 0.2s ease;
-
-    &:hover {
-        opacity: 0.9;
+    export const Button = ({ children, onClick }: Props) => {
+    return <ButtonContainer onClick={onClick}>{children}</ButtonContainer>
     }
-    `
-
-    export const Button = ({ variant, children, onClick }: ButtonProps) => (
-    <StyledButton variant={variant} onClick={onClick}>
-        {children}
-    </StyledButton>
-    )

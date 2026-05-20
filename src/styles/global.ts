@@ -1,14 +1,17 @@
     import { createGlobalStyle } from 'styled-components'
 
+    // Aqui estão TODAS as cores que o seu projeto precisa para não dar erro
     export const colors = {
-    textPrimary: '#E66767',   // Vermelho/Rosa característico do efood
-    bgLight: '#FFF8F2',       // Fundo geral bege bem claro
-    bgCard: '#FFFFFF',        // Fundo branco dos cards
-    bgFooter: '#FFEBD6',      // Bege mais escuro usado nos fundos e botões secundários
+    textPrimary: '#E66767',
+    textNeutral: '#E66767', // Adicionado para o Button encontrar
+    bgPrimary: '#FFF8F2',   // Adicionado para o fundo encontrar
+    bgLight: '#FFF8F2',
+    bgCard: '#E66767',
+    bgFooter: '#3B3B3B',
     white: '#FFFFFF'
     }
 
-    export const GlobalStyle = createGlobalStyle`
+    export const GlobalCss = createGlobalStyle`
     * {
         margin: 0;
         padding: 0;
@@ -29,7 +32,7 @@
         margin: 0 auto;
 
         @media (max-width: 1024px) {
-        width: 95%;
+        max-width: 80%;
         }
     }
     `
