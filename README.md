@@ -1,73 +1,32 @@
-# React + TypeScript + Vite
+# 🍽️ efood - Delivery de Gastronomia
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O **efood** é uma plataforma de delivery de comida que traz a experiência gastronômica dos melhores restaurantes direto para o conforto da sua casa. Este projeto foi desenvolvido com foco em alta fidelidade ao design proposto no Figma, implementando navegação dinâmica e componentes modulares.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Funcionalidades Principais
 
-## React Compiler
+* **Página Inicial (Home):** Listagem de restaurantes parceiros com filtros por categorias (Japonesa, Italiana, Hamburguer, etc.) e destaques da semana.
+* **Rotas Dinâmicas:** Navegação fluida utilizando IDs específicos para cada restaurante (ex: `/perfil/1`, `/perfil/2`), garantindo que cada estabelecimento carregue seu próprio cardápio exclusivo.
+* **Página de Perfil e Cardápio:** Apresentação personalizada com banners hero, cabeçalho alinhado ao Figma e grid de produtos responsivo.
+* **Design Responsivo:** Adaptado perfeitamente para resoluções de Desktop, Tablets e Smartphones.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* **React** (com TypeScript)
+* **Vite** (para um build rápido e otimizado)
+* **Styled Components** (estilização CSS-in-JS isolada e performática)
+* **React Router DOM** (gerenciamento de rotas e parâmetros dinâmicos de URL)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🎨 Design (Figma)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+O projeto foi construído respeitando milimetricamente a identidade visual do protótipo do Figma:
+* Tipografia baseada na fonte **Roboto** com pesos contrastantes.
+* Paleta de cores oficial baseada na cor primária característica do efood (`#E66767`).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
