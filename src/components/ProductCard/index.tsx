@@ -1,18 +1,22 @@
-    import { CardContainer, Title, Description, AddButton } from './styles'
+import { CardContainer, Title, Description, AddButton } from './styles'
 
-    interface ProductProps {
+interface ProductProps {
     image: string
     title: string
     description: string
+    onButtonClick: () => void // O "fio" do clique está declarado aqui
     }
 
-    export const ProductCard = ({ image, title, description }: ProductProps) => {
+    // 1. O 'onButtonClick' foi adicionado bem aqui nos parênteses para o componente usar ele:
+    export const ProductCard = ({ image, title, description, onButtonClick }: ProductProps) => {
     return (
         <CardContainer>
         <img src={image} alt={title} />
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <AddButton>Adicionar ao carrinho</AddButton>
+        
+        {/* 2. Adicionamos o onClick={onButtonClick} aqui para o botão escutar o clique: */}
+        <AddButton onClick={onButtonClick}>Adicionar ao carrinho</AddButton>
         </CardContainer>
     )
     }

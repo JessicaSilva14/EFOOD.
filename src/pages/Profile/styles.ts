@@ -92,3 +92,84 @@
         grid-template-columns: 1fr;
     }
     `
+
+    export const ModalOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    `
+
+    export const ModalContent = styled.div`
+    background-color: #E66767;
+    color: #FFEED2;
+    padding: 32px;
+    max-width: 1024px;
+    width: 90%;
+    position: relative;
+    `
+
+    export const CloseButton = styled.button`
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #FFEED2;
+    font-size: 24px;
+    cursor: pointer;
+    `
+
+    export const ModalFlex = styled.div`
+    display: flex;
+    gap: 24px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+
+    img {
+        width: 360px;
+        height: 360px;
+        object-fit: cover;
+        border-radius: 4px;
+
+        @media (max-width: 768px) {
+        width: 100%;
+        height: 200px;
+        }
+    }
+
+    h3 {
+        font-size: 18px;
+        font-weight: 900;
+        margin-bottom: 16px;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 22px;
+        margin-bottom: 24px;
+    }
+
+    .porcao {
+        font-weight: bold;
+        margin-bottom: 16px;
+    }
+
+    .add-cart {
+        background-color: #FFEED2;
+        color: #E66767;
+        border: none;
+        padding: 8px 12px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    `
