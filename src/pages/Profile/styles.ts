@@ -79,6 +79,13 @@
     padding: 56px 0 120px 0;
     `
 
+export const LoadingMessage = styled.h3`
+    text-align: center;
+    padding: 20px;
+    color: #333;
+    font-weight: 700;
+    `
+
     export const MenuGrid = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

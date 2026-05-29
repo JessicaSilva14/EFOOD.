@@ -1,13 +1,18 @@
 import { BrowserRouter } from 'react-router-dom'
-import { GlobalStyle } from './styles/global' // Mudado de GlobalCss para GlobalStyle
+import { Provider } from 'react-redux' // Importa o Provider
+import { store } from './store' // Importa a store que criamos
+
+import { GlobalStyle } from './styles/global' 
 import { AppRoutes } from './routes' 
 
 function App() {
   return (
-    <BrowserRouter>
-      <GlobalStyle /> {/* Ajustado aqui também */}
-      <AppRoutes /> 
-    </BrowserRouter>
+    <Provider store={store}> {/* O Provider precisa envolver TUDO para o Redux funcionar */}
+      <BrowserRouter>
+        <GlobalStyle /> 
+        <AppRoutes /> 
+      </BrowserRouter>
+    </Provider>
   )
 }
 

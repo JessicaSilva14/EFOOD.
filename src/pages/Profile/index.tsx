@@ -1,5 +1,10 @@
     import { useState, useEffect } from 'react'
     import { useParams } from 'react-router-dom'
+    import { useDispatch, useSelector } from 'react-redux' // Importações do Redux
+    import type { RootState } from '../../store' // Importação do tipo da sua Store
+    import { add, open } from '../../store/cartSlice' // Importação das Actions do seu Slice
+    import { Cart } from '../../components/Cart/index' // Importação do componente de Carrinho
+
     import { HeaderBar, Banner, MenuSection, MenuGrid, LinkRestaurantes, TextCarrinho } from './styles'
     import { ProductCard } from '../../components/ProductCard'
     import { Footer } from '../../components/Footer'
@@ -33,6 +38,10 @@
     const { id } = useParams<{ id: string }>()
     const idRestaurante = id ? parseInt(id) : 1
 
+    const dispatch = useDispatch()
+    // Seleciona os itens que estão armazenados no estado global do Redux
+    const itemsCarrinho = useSelector((state: RootState) => state.cart.items)
+
     // Estado para guardar os dados do restaurante atual vindos da API
     const [restaurante, setRestaurante] = useState<RestauranteAPI | null>(null)
     const [pratoModal, setPratoModal] = useState<PratoAPI | null>(null)
@@ -56,9 +65,18 @@
         }
     }
 
+    // Função para lidar com a ação de adicionar o item do modal para o carrinho
+    const handleAddToCart = () => {
+        if (pratoModal) {
+        dispatch(add(pratoModal)) // Adiciona o prato ao estado global
+        dispatch(open()) // Abre a Sidebar lateral do carrinho de forma dinâmica
+        setPratoModal(null) // Opcional: Fecha o modal de detalhes do prato
+        }
+    }
+
     // Enquanto a API não responde, exibe uma mensagem de carregamento simples
     if (!restaurante) {
-        return <h3 style={{ textAlign: 'center', padding: '20px' }}>Carregando cardápio...</h3>
+        return <S.LoadingMessage>Carregando cardápio...</S.LoadingMessage>
     }
 
     return (
@@ -67,7 +85,10 @@
             <div className="container">
             <LinkRestaurantes to="/">Restaurantes</LinkRestaurantes>
             <img src={logo} alt="efood" />
-            <TextCarrinho>0 produto(s) no carrinho</TextCarrinho>
+            {/* Mostra a quantidade real e ganha a função de abrir o carrinho ao clicar */}
+            <TextCarrinho onClick={() => dispatch(open())}>
+                {itemsCarrinho.length} produto(s) no carrinho
+            </TextCarrinho>
             </div>
         </HeaderBar>
 
@@ -108,7 +129,8 @@
                     <p>{pratoModal.descricao}</p>
                     <p className="porcao">Serve: {pratoModal.porcao}</p>
                     
-                    <button className="add-cart">
+                    {/* Vincula a função de clique para disparar o Redux */}
+                    <button className="add-cart" onClick={handleAddToCart}>
                     Adicionar ao carrinho - R$ {pratoModal.preco.toFixed(2).replace('.', ',')}
                     </button>
                 </div>
@@ -118,6 +140,9 @@
         )}
 
         <Footer />
+
+        {/* Renderiza a Sidebar do carrinho na página */}
+        <Cart />
         </>
     )
     }
