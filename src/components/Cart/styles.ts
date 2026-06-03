@@ -54,27 +54,32 @@
     }
 
     button {
-        position: absolute;
-        bottom: 8px;
-        right: 8px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        color: #e66767; // Ícone da lixeira em coral
-        font-size: 16px;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 16px;
-        height: 16px;
+    position: absolute;
+    bottom: 8px; /* Posiciona no canto inferior */
+    right: 8px;  /* Posiciona no canto direito */
+    width: 16px;   /* Largura exata do Figma */
+    height: 16px;  /* Altura exata do Figma */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;    /* Opacidade 1 conforme especificado */
+    transition: transform 0.2s ease;
 
-        img {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        }
+    img {
+        width: 16px;        /* Força o SVG interno a ter 16px */
+        height: 16px;       /* Força o SVG interno a ter 16px */
+        object-fit: contain; /* Garante que a lixeira não fique distorcida ou esticada */
+        display: block;
     }
+
+    &:hover {
+        transform: scale(1.05); /* Um feedback bem sutil ao passar o mouse */
+    }
+}
     `
 
     export const ItemList = styled.ul`

@@ -1,7 +1,10 @@
     import { useDispatch, useSelector } from 'react-redux'
     import type { RootState } from '../../store'
     import { close, remove } from '../../store/cartSlice'
-    import * as S from './styles' // Importa como S para não chocar com o nome do componente Cart
+    import * as S from './styles'
+
+    // Importando o ícone renomeado corretamente
+    import lixeiraIcon from '../../assets/lixeira.svg'
 
     export const Cart = () => {
     const { isOpen, items } = useSelector((state: RootState) => state.cart)
@@ -9,7 +12,6 @@
 
     if (!isOpen) return null
 
-    // Cálculo da soma dinâmica do preço de todos os produtos do carrinho
     const valorTotal = items.reduce((acumulador, itemAtual) => {
         return acumulador + itemAtual.preco
     }, 0)
@@ -23,18 +25,19 @@
             <>
                 <S.ItemList>
                 {items.map((item) => (
-                    <li key={item.id}>
-                    <S.CartItem>
-                        <img src={item.foto} alt={item.nome} />
-                        <div>
+                    <S.CartItem key={item.idCarrinho}>
+                    <img src={item.foto} alt={item.nome} />
+                    <div>
                         <h3>{item.nome}</h3>
                         <p>R$ {item.preco.toFixed(2).replace('.', ',')}</p>
-                        </div>
-                        <button onClick={() => dispatch(remove(item.id))} title="Remover item">
-                        🗑
-                        </button>
+                    </div>
+                    <button 
+                        onClick={() => dispatch(remove(item.idCarrinho!))} 
+                        title="Remover item"
+                    >
+                        <img src={lixeiraIcon} alt="Remover item" />
+                    </button>
                     </S.CartItem>
-                    </li>
                 ))}
                 </S.ItemList>
 
