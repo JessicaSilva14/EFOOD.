@@ -8,7 +8,7 @@
     return (
         <FooterContainer>
         <img src={logo} alt="efood" />
-        
+
         <SocialLinks>
             <a href="https://instagram.com" target="_blank" rel="noreferrer">
             <img src={instagram} alt="Instagram" />
@@ -22,8 +22,8 @@
         </SocialLinks>
 
         <FooterText>
-            A efood é uma plataforma para delimitação de estabelecimentos, a responsabilidade pela entrega, 
-            qualidade dos produtos é toda do estabelecimento contratado.
+            A efood é uma plataforma para delimitação de estabelecimentos, a responsabilidade pela
+            entrega, qualidade dos produtos é toda do estabelecimento contratado.
         </FooterText>
         </FooterContainer>
     )

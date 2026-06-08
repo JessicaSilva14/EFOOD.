@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: auto; /* Garante que o footer fique na base caso a página tenha pouco conteúdo */
+    margin-top: auto;
     `
 
     export const SocialLinks = styled.div`
@@ -25,7 +25,7 @@
         &:hover {
         opacity: 0.75;
         }
-        
+
         img {
         width: 100%;
         height: 100%;

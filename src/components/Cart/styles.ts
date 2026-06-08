@@ -64,20 +64,12 @@
         border: none;
         cursor: pointer;
         padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.2s ease;
 
         img {
         width: 16px;
         height: 16px;
         object-fit: contain;
         display: block;
-        }
-
-        &:hover {
-        transform: scale(1.05);
         }
     }
     `
@@ -86,7 +78,6 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    overflow-y: auto;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -170,7 +161,6 @@
     export const FormRow = styled.div`
     display: flex;
     gap: 8px;
-    margin-bottom: 0;
     `
 
     export const ConfirmationText = styled.p`
@@ -188,4 +178,10 @@
     background-color: rgba(0, 0, 0, 0.15);
     padding: 8px;
     border-radius: 4px;
+    `
+
+    export const FieldError = styled.span`
+    color: #fff0f0;
+    font-size: 12px;
+    margin-top: 2px;
     `

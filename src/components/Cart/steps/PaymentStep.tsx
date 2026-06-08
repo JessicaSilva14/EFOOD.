@@ -1,14 +1,48 @@
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../../../store'
 import { setCheckoutStep, setOrderConfirmation } from '../../../store/cartSlice'
 import type { PaymentData, DeliveryData } from '../types'
 import * as S from '../styles'
-import { useState } from 'react'
 
 interface Props {
   data: PaymentData
   onChange: (data: PaymentData) => void
   delivery: DeliveryData
+}
+
+type Errors = Partial<Record<'name' | 'number' | 'code' | 'month' | 'year', string>>
+
+const onlyNumbers = (value: string) => value.replace(/\D/g, '')
+
+const formatCardNumber = (value: string) => {
+  const digits = onlyNumbers(value).slice(0, 16)
+  return digits.replace(/(.{4})/g, '$1 ').trim()
+}
+
+const validate = (data: PaymentData): Errors => {
+  const errors: Errors = {}
+  const { card } = data
+
+  if (!card.name.trim()) errors.name = 'Campo obrigatório'
+
+  const cardDigits = onlyNumbers(card.number)
+  if (!cardDigits) errors.number = 'Campo obrigatório'
+  else if (cardDigits.length !== 16) errors.number = 'Número inválido (16 dígitos)'
+
+  if (!card.code) errors.code = 'Campo obrigatório'
+  else if (onlyNumbers(card.code).length !== 3) errors.code = 'CVV inválido'
+
+  const month = Number(card.expires.month)
+  if (!card.expires.month) errors.month = 'Campo obrigatório'
+  else if (month < 1 || month > 12) errors.month = 'Mês inválido'
+
+  const year = Number(card.expires.year)
+  const currentYear = new Date().getFullYear()
+  if (!card.expires.year) errors.year = 'Campo obrigatório'
+  else if (card.expires.year.length !== 4 || year < currentYear) errors.year = 'Ano inválido'
+
+  return errors
 }
 
 export const PaymentStep = ({ data, onChange, delivery }: Props) => {
@@ -17,7 +51,9 @@ export const PaymentStep = ({ data, onChange, delivery }: Props) => {
   const valorTotal = items.reduce((acc, item) => acc + item.preco, 0)
 
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [apiError, setApiError] = useState('')
+  const [errors, setErrors] = useState<Errors>({})
+  const [touched, setTouched] = useState(false)
 
   const setCard = (field: string, value: string) =>
     onChange({ ...data, card: { ...data.card, [field]: value } })
@@ -25,8 +61,13 @@ export const PaymentStep = ({ data, onChange, delivery }: Props) => {
     onChange({ ...data, card: { ...data.card, expires: { ...data.card.expires, [field]: value } } })
 
   const handleFinalizar = async () => {
+    setTouched(true)
+    const erros = validate(data)
+    setErrors(erros)
+    if (Object.keys(erros).length > 0) return
+
     setIsLoading(true)
-    setError('')
+    setApiError('')
     try {
       const response = await fetch('https://api-ebac.vercel.app/api/efood/checkout', {
         method: 'POST',
@@ -35,14 +76,12 @@ export const PaymentStep = ({ data, onChange, delivery }: Props) => {
           products: items.map((item) => ({ id: item.id, price: item.preco })),
           delivery: {
             receiver: delivery.receiver,
-            address: {
-              ...delivery.address,
-              number: Number(delivery.address.number)
-            }
+            address: { ...delivery.address, number: Number(delivery.address.number) }
           },
           payment: {
             card: {
               ...data.card,
+              number: onlyNumbers(data.card.number),
               code: Number(data.card.code),
               expires: {
                 month: Number(data.card.expires.month),
@@ -55,11 +94,13 @@ export const PaymentStep = ({ data, onChange, delivery }: Props) => {
       const result = await response.json()
       dispatch(setOrderConfirmation({ orderId: result.orderId || result.id || 'N/A' }))
     } catch {
-      setError('Erro ao finalizar pedido. Tente novamente.')
+      setApiError('Erro ao finalizar pedido. Tente novamente.')
     } finally {
       setIsLoading(false)
     }
   }
+
+  const err = touched ? errors : {}
 
   return (
     <>
@@ -70,31 +111,54 @@ export const PaymentStep = ({ data, onChange, delivery }: Props) => {
       <S.FormGroup>
         <label>Nome no cartão</label>
         <input value={data.card.name} onChange={(e) => setCard('name', e.target.value)} />
+        {err.name && <S.FieldError>{err.name}</S.FieldError>}
       </S.FormGroup>
 
       <S.FormRow>
         <S.FormGroup style={{ flex: 1 }}>
           <label>Número do cartão</label>
-          <input maxLength={19} value={data.card.number} onChange={(e) => setCard('number', e.target.value)} />
+          <input
+            maxLength={19}
+            value={data.card.number}
+            onChange={(e) => setCard('number', formatCardNumber(e.target.value))}
+          />
+          {err.number && <S.FieldError>{err.number}</S.FieldError>}
         </S.FormGroup>
         <S.FormGroup style={{ width: '87px' }}>
           <label>CVV</label>
-          <input maxLength={3} value={data.card.code} onChange={(e) => setCard('code', e.target.value)} />
+          <input
+            maxLength={3}
+            value={data.card.code}
+            onChange={(e) => setCard('code', onlyNumbers(e.target.value))}
+          />
+          {err.code && <S.FieldError>{err.code}</S.FieldError>}
         </S.FormGroup>
       </S.FormRow>
 
       <S.FormRow>
         <S.FormGroup style={{ flex: 1 }}>
           <label>Mês de vencimento</label>
-          <input maxLength={2} placeholder="MM" value={data.card.expires.month} onChange={(e) => setExpires('month', e.target.value)} />
+          <input
+            maxLength={2}
+            placeholder="MM"
+            value={data.card.expires.month}
+            onChange={(e) => setExpires('month', onlyNumbers(e.target.value))}
+          />
+          {err.month && <S.FieldError>{err.month}</S.FieldError>}
         </S.FormGroup>
         <S.FormGroup style={{ flex: 1 }}>
           <label>Ano de vencimento</label>
-          <input maxLength={4} placeholder="AAAA" value={data.card.expires.year} onChange={(e) => setExpires('year', e.target.value)} />
+          <input
+            maxLength={4}
+            placeholder="AAAA"
+            value={data.card.expires.year}
+            onChange={(e) => setExpires('year', onlyNumbers(e.target.value))}
+          />
+          {err.year && <S.FieldError>{err.year}</S.FieldError>}
         </S.FormGroup>
       </S.FormRow>
 
-      {error && <S.ErrorMsg>{error}</S.ErrorMsg>}
+      {apiError && <S.ErrorMsg>{apiError}</S.ErrorMsg>}
 
       <S.CheckoutButton onClick={handleFinalizar} disabled={isLoading}>
         {isLoading ? 'Finalizando...' : 'Finalizar pagamento'}
